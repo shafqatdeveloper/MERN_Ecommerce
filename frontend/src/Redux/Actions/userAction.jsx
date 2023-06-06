@@ -83,3 +83,10 @@ export const resetPassword = createAsyncThunk(
     return response.data;
   }
 );
+
+export const allUsers = createAsyncThunk("data/allUsers", async () => {
+  const response = await axios.get(`${url}/admin/all`, {
+    withCredentials: true,
+  });
+  return response.data;
+});

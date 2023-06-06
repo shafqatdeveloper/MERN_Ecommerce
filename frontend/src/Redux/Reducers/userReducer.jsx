@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  allUsers,
   forgotPassword,
   loadUser,
   loginUser,
@@ -21,6 +22,7 @@ export const userSlice = createSlice({
     updated: false,
     message: null,
     reset: false,
+    Users: [],
   },
   reducers: {
     resetState: (state) => {
@@ -172,6 +174,24 @@ export const userSlice = createSlice({
       };
     });
     builder.addCase(resetPassword.rejected, (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        errors: action.error.message,
+      };
+    });
+    builder.addCase(allUsers.pending, (state) => {
+      (state.loading = true), (state.errors = null);
+    });
+    builder.addCase(allUsers.fulfilled, (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+        Users: action.payload.users,
+      };
+    });
+    builder.addCase(allUsers.rejected, (state, action) => {
       return {
         ...state,
         loading: false,

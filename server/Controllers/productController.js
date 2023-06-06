@@ -59,23 +59,24 @@ export const updateProduct = async (req, res) => {
 
     const imagesLinks = [];
 
-    for (let i = 0; i < images.length; i++) {
-      const result = await cloudinary.v2.uploader.upload(images[i], {
-        folder: "avatars",
-      });
+    if (imagesLinks.length > 0) {
+      for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+          folder: "avatars",
+        });
 
-      imagesLinks.push({
-        public_id: await result.public_id,
-        url: await result.secure_url,
-      });
+        imagesLinks.push({
+          public_id: await result.public_id,
+          url: await result.secure_url,
+        });
+      }
+
+      req.body.images = imagesLinks;
     }
-
-    req.body.images = imagesLinks;
-
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { runValidators: true }
+      { runValidators: false }
     );
     res.status(200).json({
       success: true,

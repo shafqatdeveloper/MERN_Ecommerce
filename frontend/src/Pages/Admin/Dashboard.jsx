@@ -7,12 +7,20 @@ import "chart.js/auto";
 import { Line, Doughnut } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminProducts } from "../../Redux/Actions/adminProductAction.jsx";
+import { allUsers } from "../../Redux/Actions/userAction.jsx";
+import { getAllOrders } from "../../Redux/Actions/adminOrderAction.jsx";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { Products } = useSelector((state) => state.adminProducts);
+  const { Users } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.adminOrders);
   useEffect(() => {
     dispatch(getAdminProducts());
-  });
+  }, []);
+  useEffect(() => {
+    dispatch(allUsers());
+    dispatch(getAllOrders());
+  }, []);
 
   let outOfStock = 0;
   if (Products && Array.isArray(Products)) {
@@ -22,6 +30,12 @@ const Dashboard = () => {
       }
     });
   }
+  let totalAmount = 0;
+  if (Products && Array.isArray(Products)) {
+    Products.forEach((item) => {
+      totalAmount += item.price;
+    });
+  }
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     datasets: [
@@ -29,7 +43,7 @@ const Dashboard = () => {
         label: "TOTAL AMOUNT",
         backgroundColor: ["tomato"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 4000],
+        data: [0, totalAmount],
       },
     ],
   };
@@ -62,11 +76,11 @@ const Dashboard = () => {
               </Link>
               <Link to="/admin/orders">
                 <p>Orders</p>
-                <p>23</p>
+                <p>{orders && orders.length > 0 ? orders.length : "0"}</p>
               </Link>
               <Link to="/admin/users">
                 <p>Users</p>
-                <p>78</p>
+                <p>{Users && Users.length > 0 ? Users.length : "0"}</p>
               </Link>
             </div>
           </div>

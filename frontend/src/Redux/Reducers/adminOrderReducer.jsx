@@ -22,6 +22,7 @@ export const adminOrdersSlice = createSlice({
       (state.loading = true), (state.errors = null);
     });
     builder.addCase(getAllOrders.fulfilled, (state, action) => {
+      console.log("Orders", action.payload.orders);
       return {
         ...state,
         orders: action.payload.orders,

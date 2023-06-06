@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BsCartPlusFill, BsSearch } from "react-icons/bs";
-import { MdOutlineAddIcCall } from "react-icons/md";
+import React, { useState } from "react";
+import { BsCartPlusFill } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../Redux/Actions/productAction.jsx";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import profile from "../assets/profile.jpg";
 import SpeedDial from "@mui/material/SpeedDial";
@@ -63,16 +62,26 @@ const Navbar = () => {
     <div className="w-full text-gray-100 bg-[#3c6578] h-20 ">
       {/* Desktop Menu */}
       <div className=" sm:flex h-full items-center hidden  justify-between px-5">
-        <div>
+        <div className="flex items-center">
           <Link to="/">
-            <h1 className="bold text-3xl">Logo</h1>
+            <h1 className="bold text-2xl font-semibold">E-Commerce</h1>
           </Link>
+          <div className="flex pl-12 items-center gap-3">
+            <Link to="/">
+              <h1 className=" font-semibold">Home</h1>
+            </Link>
+            <Link to="/shop">
+              <h1 className=" font-semibold">Shop</h1>
+            </Link>
+            <Link to="/about">
+              <h1 className=" font-semibold">About</h1>
+            </Link>
+            <Link to="/contact">
+              <h1 className=" font-semibold">Contact</h1>
+            </Link>
+          </div>
         </div>
         <div className="flex items-center gap-12 pr-5">
-          <div className="flex flex-col justify-center items-center gap-2">
-            <MdOutlineAddIcCall size={25} className="text-white/75" />
-            <h1>+92312-3456789</h1>
-          </div>
           <Link to="/cart">
             <div className="relative">
               <BsCartPlusFill size={37} className="text-white" />
@@ -85,30 +94,38 @@ const Navbar = () => {
             <Loader />
           ) : (
             <div>
-              <SpeedDial
-                ariaLabel="SpeedDial tooltip example"
-                sx={{ position: "absolute", top: 16, right: 5 }}
-                icon={
-                  <img
-                    src={user.avatar?.url || profile}
-                    className="rounded-full w-12 h-12 object-cover"
-                  />
-                }
-                direction="down"
-                onClose={handleClose}
-                onOpen={handleOpen}
-                open={open}
-              >
-                {actions.map((action) => (
-                  <SpeedDialAction
-                    key={action.name}
-                    icon={action.icon}
-                    tooltipTitle={action.name}
-                    tooltipOpen
-                    onClick={action.func}
-                  />
-                ))}
-              </SpeedDial>
+              {isAuthenticated ? (
+                <SpeedDial
+                  ariaLabel="SpeedDial tooltip example"
+                  sx={{ position: "absolute", top: 16, right: 5 }}
+                  icon={
+                    <img
+                      src={user.avatar?.url || profile}
+                      className="rounded-full w-12 h-12 object-cover"
+                    />
+                  }
+                  direction="down"
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  open={open}
+                >
+                  {actions.map((action) => (
+                    <SpeedDialAction
+                      key={action.name}
+                      icon={action.icon}
+                      tooltipTitle={action.name}
+                      tooltipOpen
+                      onClick={action.func}
+                    />
+                  ))}
+                </SpeedDial>
+              ) : (
+                <div>
+                  <Link to="/loginsignup">
+                    <FaUser size={28} />
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -126,10 +143,6 @@ const Navbar = () => {
       )}
       {nav && (
         <div className="w-[250px] flex-col flex items-start gap-5 pl-5 pt-5 h-screen fixed top-0 right-0 bg-white z-50">
-          <div className="flex flex-col justify-center items-center gap-2">
-            <MdOutlineAddIcCall size={25} className="text-black" />
-            <h1>+92312-3456789</h1>
-          </div>
           <div className="relative">
             <BsCartPlusFill size={37} className="text-black" />
             <h1 className="absolute left-5 top-0 bg-red-500 text-sm px-1.5 rounded-full">
