@@ -1,0 +1,21 @@
+.myOrdersTable {
+  background-color: white;
+}
+.myOrdersTable div {
+  color: black;
+  border: none;
+}
+
+.myOrdersTable a {
+  color: rgb(72, 71, 71);
+}
+.myOrdersTable a:hover {
+  color: rgb(207, 90, 0);
+}
+.MuiDataGrid-columnHeader {
+  background-color: rgb(71, 200, 255);
+  padding: 1vmax !important;
+}
+.MuiDataGrid-columnHeader div {
+  color: white;
+}

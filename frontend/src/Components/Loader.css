@@ -1,0 +1,34 @@
+.center-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+.loader-circle-71 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 8px solid;
+  border-color: #ffeb3b;
+  border-right-color: #bbb;
+  position: relative;
+  animation: loader-circle-71-spin 1s infinite linear;
+  display: inline-block;
+}
+.loader-circle-71:after {
+  background-color: #8bc34a;
+  content: "";
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+@keyframes loader-circle-71-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
